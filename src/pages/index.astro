@@ -14,10 +14,10 @@ import Layout from '../layouts/Layout.astro';
     Resumia helps job seekers, students, and freelancers build professional, ATS-friendly resumes and cover letters — in seconds.
   </p>
 
-  <!-- Custom Resume Form -->
-  <form id="resumeForm" class="w-full max-w-2xl mx-auto grid gap-4 text-left bg-white p-8 rounded-lg shadow-md">
-    <h2 class="text-2xl font-semibold mb-4 text-blue-800 text-center">Start Building Your Resume</h2>
-
+  <!-- Resume Form Section -->
+<section class="mt-10 bg-white py-10 rounded-lg shadow-md">
+  <h2 class="text-3xl font-semibold mb-6 text-blue-800 text-center">Start Building Your Resume</h2>
+  <form id="resumeForm" class="max-w-2xl mx-auto grid gap-4 text-left px-4">
     <input type="text" name="firstName" placeholder="First Name" required class="border px-4 py-2 rounded">
     <input type="text" name="lastName" placeholder="Last Name" required class="border px-4 py-2 rounded">
     <input type="email" name="email" placeholder="Email" required class="border px-4 py-2 rounded">
@@ -26,7 +26,6 @@ import Layout from '../layouts/Layout.astro';
     <input type="text" name="experience" placeholder="Experience" required class="border px-4 py-2 rounded">
     <input type="text" name="skills" placeholder="Skills (comma-separated)" required class="border px-4 py-2 rounded">
     <textarea name="objective" placeholder="Career Objective" required class="border px-4 py-2 rounded"></textarea>
-
     <button type="submit" class="bg-blue-600 text-white py-2 px-6 rounded hover:bg-blue-700 transition">
       Submit & Generate Resume
     </button>
