@@ -1,0 +1,38 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+  <main class="container mx-auto px-4 py-20 text-center">
+    <h1 class="text-4xl font-bold text-blue-700 mb-4">⏳ Processing Your Resume...</h1>
+    <p class="text-gray-600 mb-8">We're analyzing your submission using AI. Please wait...</p>
+
+    <div class="animate-pulse w-20 h-20 mx-auto rounded-full bg-blue-400 mb-4"></div>
+    <p class="text-sm text-gray-500">This will only take a few seconds.</p>
+  </main>
+
+  <script>
+    const formData = localStorage.getItem("resumeFormData");
+    if (!formData) {
+      window.location.href = "/";
+    }
+
+    fetch("https://fazzy112.app.n8n.cloud/webhook/d51b6722-8fee-4b07-a113-466a66b43e51", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+      const score = data.score || 80;
+      const strengths = encodeURIComponent(data.strengths || "Well formatted");
+      const improvements = encodeURIComponent(data.improvements || "Add more achievements");
+
+      window.location.href = `/score?score=${score}&strengths=${strengths}&improvements=${improvements}`;
+    })
+    .catch(() => {
+      alert("There was an error processing your request.");
+      window.location.href = "/";
+    });
+  </script>
+</Layout>
