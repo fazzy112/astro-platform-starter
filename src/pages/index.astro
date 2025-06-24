@@ -4,27 +4,34 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout>
   <main class="container mx-auto px-4 py-20 text-center">
-    <!-- Hero Section -->
-    <section class="mb-20">
-      <h1 class="text-5xl font-bold mb-6 text-blue-800">
-        Create Your Resume Instantly with AI
-      </h1>
-      <p class="text-xl text-gray-600 mb-8">
-        Resumia helps job seekers, students, and freelancers build professional, ATS-friendly resumes and cover letters — in seconds.
-      </p>
-      <div class="w-full max-w-2xl mx-auto mt-12">
-  <iframe
-    data-tally-src="https://tally.so/embed/wANZkB?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
-    loading="lazy"
-    width="100%"
-    height="700"
-    frameborder="0"
-    marginheight="0"
-    marginwidth="0"
-    title="Resume Builder Form"
-  ></iframe>
-</div>
-    </section>
+
+<!-- Hero Section -->
+<section class="mb-20">
+  <h1 class="text-5xl font-bold mb-6 text-blue-800">
+    Create Your Resume Instantly with AI
+  </h1>
+  <p class="text-xl text-gray-600 mb-8">
+    Resumia helps job seekers, students, and freelancers build professional, ATS-friendly resumes and cover letters — in seconds.
+  </p>
+
+  <!-- Custom Resume Form -->
+  <form id="resumeForm" class="w-full max-w-2xl mx-auto grid gap-4 text-left bg-white p-8 rounded-lg shadow-md">
+    <h2 class="text-2xl font-semibold mb-4 text-blue-800 text-center">Start Building Your Resume</h2>
+
+    <input type="text" name="firstName" placeholder="First Name" required class="border px-4 py-2 rounded">
+    <input type="text" name="lastName" placeholder="Last Name" required class="border px-4 py-2 rounded">
+    <input type="email" name="email" placeholder="Email" required class="border px-4 py-2 rounded">
+    <input type="tel" name="phone" placeholder="Phone Number" required class="border px-4 py-2 rounded">
+    <input type="text" name="education" placeholder="Education" required class="border px-4 py-2 rounded">
+    <input type="text" name="experience" placeholder="Experience" required class="border px-4 py-2 rounded">
+    <input type="text" name="skills" placeholder="Skills (comma-separated)" required class="border px-4 py-2 rounded">
+    <textarea name="objective" placeholder="Career Objective" required class="border px-4 py-2 rounded"></textarea>
+
+    <button type="submit" class="bg-blue-600 text-white py-2 px-6 rounded hover:bg-blue-700 transition">
+      Submit & Generate Resume
+    </button>
+  </form>
+</section>
 
     <!-- How It Works -->
     <section class="mb-20">
@@ -86,4 +93,51 @@ import Layout from '../layouts/Layout.astro';
 </section>
 </main>
 <script src="https://tally.so/widgets/embed.js" defer></script>
+<script>
+  window.addEventListener("message", function (event) {
+    // Listen for Tally form submission event
+    if (event.data?.type === "TALLY_FORM_SUBMITTED") {
+      // Store dummy data for now
+      const formData = {
+        firstName: "Faizan",
+        lastName: "Rajput",
+        email: "test@gmail.com",
+        phone: "+923122737925",
+        education: "BS Arts",
+        experience: "Administrative",
+        skills: "MS Office, Excel",
+        objective: "Seeking an administrative role"
+      };
+
+      // Save to localStorage
+      localStorage.setItem("resumeFormData", JSON.stringify(formData));
+
+      // Redirect to processing page
+      window.location.href = "/processing";
+    }
+  });
+</script>
 </Layout>
+<script>
+  const form = document.getElementById("resumeForm");
+  if (form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const formData = {
+        firstName: form.firstName.value,
+        lastName: form.lastName.value,
+        email: form.email.value,
+        phone: form.phone.value,
+        education: form.education.value,
+        experience: form.experience.value,
+        skills: form.skills.value,
+        objective: form.objective.value
+      };
+
+      localStorage.setItem("resumeFormData", JSON.stringify(formData));
+      window.location.href = "/processing";
+    });
+  }
+</script>
+
