@@ -92,22 +92,24 @@ import Layout from '../layouts/Layout.astro';
   </div>
 </section>
 </main>
-<script src="https://tally.so/widgets/embed.js" defer></script>
 <script>
-  window.addEventListener("message", function (event) {
-    // Listen for Tally form submission event
-    if (event.data?.type === "TALLY_FORM_SUBMITTED") {
-      // Store dummy data for now
       const formData = {
-        firstName: "Faizan",
-        lastName: "Rajput",
-        email: "test@gmail.com",
-        phone: "+923122737925",
-        education: "BS Arts",
-        experience: "Administrative",
-        skills: "MS Office, Excel",
-        objective: "Seeking an administrative role"
+        firstName: form.firstName.value,
+        lastName: form.lastName.value,
+        email: form.email.value,
+        phone: form.phone.value,
+        education: form.education.value,
+        experience: form.experience.value,
+        skills: form.skills.value,
+        objective: form.objective.value
       };
+
+      localStorage.setItem("resumeFormData", JSON.stringify(formData));
+      window.location.href = "/processing";
+    });
+  }
+</script>
+</Layout>
 
       // Save to localStorage
       localStorage.setItem("resumeFormData", JSON.stringify(formData));
@@ -116,9 +118,8 @@ import Layout from '../layouts/Layout.astro';
       window.location.href = "/processing";
     }
   });
-</script>
 </Layout>
-<script>
+  <script>
   const form = document.getElementById("resumeForm");
   if (form) {
     form.addEventListener("submit", function (e) {
@@ -140,4 +141,5 @@ import Layout from '../layouts/Layout.astro';
     });
   }
 </script>
+</Layout>
 
