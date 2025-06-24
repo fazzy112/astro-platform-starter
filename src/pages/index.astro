@@ -93,33 +93,6 @@ import Layout from '../layouts/Layout.astro';
 </section>
 </main>
 <script>
-      const formData = {
-        firstName: form.firstName.value,
-        lastName: form.lastName.value,
-        email: form.email.value,
-        phone: form.phone.value,
-        education: form.education.value,
-        experience: form.experience.value,
-        skills: form.skills.value,
-        objective: form.objective.value
-      };
-
-      localStorage.setItem("resumeFormData", JSON.stringify(formData));
-      window.location.href = "/processing";
-    });
-  }
-</script>
-</Layout>
-
-      // Save to localStorage
-      localStorage.setItem("resumeFormData", JSON.stringify(formData));
-
-      // Redirect to processing page
-      window.location.href = "/processing";
-    }
-  });
-</Layout>
-  <script>
   const form = document.getElementById("resumeForm");
   if (form) {
     form.addEventListener("submit", function (e) {
@@ -142,4 +115,3 @@ import Layout from '../layouts/Layout.astro';
   }
 </script>
 </Layout>
-
