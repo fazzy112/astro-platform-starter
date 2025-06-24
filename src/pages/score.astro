@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const { searchParams } = new URL(import.meta.env.SITE + '/?' + Astro.request.url.split('?')[1]);
+const score = searchParams.get('score') ?? 'Not available';
+const strengths = searchParams.get('strengths') ?? 'Not provided';
+const improvements = searchParams.get('improvements') ?? 'Not provided';
+---
+
+<Layout>
+  <main class="container mx-auto px-4 py-20 text-center">
+    <h1 class="text-4xl font-bold text-blue-700 mb-8">🎯 Resume Score</h1>
+
+    <div class="max-w-2xl mx-auto bg-white shadow-md rounded-lg p-6 mb-10">
+      <h2 class="text-2xl font-semibold mb-4">Your Score:</h2>
+      <p class="text-5xl font-bold text-green-600 mb-6">{score}</p>
+
+      <h3 class="text-xl font-bold text-blue-700 mb-2">✅ Strengths</h3>
+      <p class="text-gray-700 mb-6">{strengths}</p>
+
+      <h3 class="text-xl font-bold text-yellow-600 mb-2">⚠️ Improvements</h3>
+      <p class="text-gray-700">{improvements}</p>
+    </div>
+
+    <a href="/" class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition">Back to Home</a>
+  </main>
+</Layout>
