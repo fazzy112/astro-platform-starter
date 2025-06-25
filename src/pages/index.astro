@@ -41,8 +41,8 @@ import Layout from '../layouts/Layout.astro';
     <section id="previewSection" class="bg-gray-50 py-16 px-6 hidden">
       <h2 class="text-3xl font-bold text-center mb-6">Your AI-Generated Resume</h2>
       <div class="bg-white shadow-xl rounded-xl p-6 max-w-3xl mx-auto">
-        <p class="mb-4 text-gray-700">[Resume Content Here]</p>
-        <p class="text-green-600 font-semibold">Score: 85 / 100</p>
+        <pre id="resumeOutput" class="mb-4 text-gray-700 whitespace-pre-wrap">[Resume Content Here]</pre>
+        <p class="text-green-600 font-semibold">Score: <span id="resumeScore">85</span> / 100</p>
         <button id="downloadBtn" class="mt-6 bg-green-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-green-700" disabled>⏳ Watch Ad to Download</button>
       </div>
     </section>
@@ -76,13 +76,33 @@ import Layout from '../layouts/Layout.astro';
       document.getElementById("formModal").classList.add("hidden");
     }
 
-    document.getElementById("resumeForm")?.addEventListener("submit", function (e) {
+    document.getElementById("resumeForm")?.addEventListener("submit", async function (e) {
       e.preventDefault();
+      const form = e.target;
+      const data = {
+        name: form.name.value,
+        title: form.title.value,
+        summary: form.summary.value,
+      };
+
       closeFormModal();
       document.getElementById("previewSection").classList.remove("hidden");
 
-      // TODO: Connect to n8n webhook here
-      console.log("Form data submitted to backend");
+      try {
+        const res = await fetch("https://fazzy112.app.n8n.cloud/webhook/d51b6722-8fee-4b07-a113-466a66b43e51", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
+        document.getElementById("resumeOutput").textContent = result.resume || "[Generated resume text here]";
+        document.getElementById("resumeScore").textContent = result.score || "85";
+      } catch (err) {
+        document.getElementById("resumeOutput").textContent = "Error generating resume. Please try again.";
+      }
     });
 
     function openUploadModal() {
@@ -97,7 +117,7 @@ import Layout from '../layouts/Layout.astro';
         setTimeout(() => {
           btn.disabled = false;
           btn.textContent = "✅ Click to Download";
-        }, 30000); // 30 seconds
+        }, 30000);
 
         btn.addEventListener("click", () => {
           alert("Your resume is downloading...");
