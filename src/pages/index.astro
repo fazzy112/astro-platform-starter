@@ -10,8 +10,8 @@ import Layout from '../layouts/Layout.astro';
       <h1 class="text-5xl font-bold text-white mb-4">Build Your Resume with AI</h1>
       <p class="text-xl text-white mb-8">Smart, Fast, and Professional Resume and Cover Letter Builder</p>
       <div class="flex justify-center gap-4">
-        <button onclick="openFormModal()" class="bg-white text-purple-700 font-bold py-3 px-6 rounded-2xl shadow-md hover:scale-105 transition">Generate from Form</button>
-        <button onclick="openUploadModal()" class="bg-white text-pink-700 font-bold py-3 px-6 rounded-2xl shadow-md hover:scale-105 transition">Upload Existing Resume</button>
+        <button id="formBtn" class="bg-white text-purple-700 font-bold py-3 px-6 rounded-2xl shadow-md hover:scale-105 transition">Generate from Form</button>
+        <button id="uploadBtnTrigger" class="bg-white text-pink-700 font-bold py-3 px-6 rounded-2xl shadow-md hover:scale-105 transition">Upload Existing Resume</button>
       </div>
     </section>
 
@@ -37,7 +37,7 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </section>
 
-    <!-- Resume Preview Section (Simulated) -->
+    <!-- Resume Preview Section -->
     <section id="previewSection" class="bg-gray-50 py-16 px-6 hidden">
       <h2 class="text-3xl font-bold text-center mb-6">Your AI-Generated Resume</h2>
       <div class="bg-white shadow-xl rounded-xl p-6 max-w-3xl mx-auto">
@@ -62,7 +62,7 @@ import Layout from '../layouts/Layout.astro';
         <input type="text" name="title" placeholder="Job Title" class="w-full p-2 border rounded">
         <textarea name="summary" placeholder="Professional Summary" class="w-full p-2 border rounded"></textarea>
         <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded">Generate Resume</button>
-        <button type="button" onclick="closeFormModal()" class="ml-2 text-gray-500">Cancel</button>
+        <button type="button" id="closeFormBtn" class="ml-2 text-gray-500">Cancel</button>
       </form>
     </div>
   </div>
@@ -74,93 +74,85 @@ import Layout from '../layouts/Layout.astro';
         <input type="file" name="file" accept=".pdf,.doc,.docx" required class="w-full">
         <textarea name="job" placeholder="Paste Job Description or Title" class="w-full p-2 border rounded"></textarea>
         <button type="submit" class="bg-pink-600 text-white px-4 py-2 rounded">Generate Resume</button>
-        <button type="button" onclick="closeUploadModal()" class="ml-2 text-gray-500">Cancel</button>
+        <button type="button" id="closeUploadBtn" class="ml-2 text-gray-500">Cancel</button>
       </form>
     </div>
   </div>
 
   <script>
-    function openFormModal() {
-      document.getElementById("formModal").classList.remove("hidden");
-    }
+    document.addEventListener("DOMContentLoaded", function () {
+      const formModal = document.getElementById("formModal");
+      const uploadModal = document.getElementById("uploadModal");
+      const previewSection = document.getElementById("previewSection");
 
-    function closeFormModal() {
-      document.getElementById("formModal").classList.add("hidden");
-    }
+      document.getElementById("formBtn").onclick = () => formModal.classList.remove("hidden");
+      document.getElementById("uploadBtnTrigger").onclick = () => uploadModal.classList.remove("hidden");
+      document.getElementById("closeFormBtn").onclick = () => formModal.classList.add("hidden");
+      document.getElementById("closeUploadBtn").onclick = () => uploadModal.classList.add("hidden");
 
-    function openUploadModal() {
-      document.getElementById("uploadModal").classList.remove("hidden");
-    }
+      document.getElementById("resumeForm")?.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const form = e.target;
+        const data = {
+          name: form.name.value,
+          title: form.title.value,
+          summary: form.summary.value,
+        };
 
-    function closeUploadModal() {
-      document.getElementById("uploadModal").classList.add("hidden");
-    }
-
-    document.getElementById("resumeForm")?.addEventListener("submit", async function (e) {
-      e.preventDefault();
-      const form = e.target;
-      const data = {
-        name: form.name.value,
-        title: form.title.value,
-        summary: form.summary.value,
-      };
-
-      closeFormModal();
-      document.getElementById("previewSection").classList.remove("hidden");
-
-      try {
-        const res = await fetch("https://fazzy112.app.n8n.cloud/webhook/d51b6722-8fee-4b07-a113-466a66b43e51", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data)
-        });
-        const result = await res.json();
-        document.getElementById("resumeOutput").textContent = result.resume || "[Generated resume text here]";
-        document.getElementById("resumeScore").textContent = result.score || "85";
-      } catch (err) {
-        document.getElementById("resumeOutput").textContent = "Error generating resume. Please try again.";
-      }
-    });
-
-    document.getElementById("uploadForm")?.addEventListener("submit", async function (e) {
-      e.preventDefault();
-      const form = e.target;
-      const file = form.file.files[0];
-      const job = form.job.value;
-
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = async function () {
-        const text = reader.result;
-        closeUploadModal();
-        document.getElementById("previewSection").classList.remove("hidden");
+        formModal.classList.add("hidden");
+        previewSection.classList.remove("hidden");
 
         try {
           const res = await fetch("https://fazzy112.app.n8n.cloud/webhook/d51b6722-8fee-4b07-a113-466a66b43e51", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ old_resume: text, job: job })
+            body: JSON.stringify(data)
           });
           const result = await res.json();
-          document.getElementById("resumeOutput").textContent = result.resume || "[Generated updated resume here]";
-          document.getElementById("resumeScore").textContent = result.score || "90";
+          document.getElementById("resumeOutput").textContent = result.resume || "[Generated resume text here]";
+          document.getElementById("resumeScore").textContent = result.score || "85";
         } catch (err) {
-          document.getElementById("resumeOutput").textContent = "Error processing uploaded resume.";
+          document.getElementById("resumeOutput").textContent = "Error generating resume. Please try again.";
         }
-      };
-      reader.readAsText(file);
-    });
+      });
 
-    // Ad download logic
-    document.addEventListener('DOMContentLoaded', function () {
-      const btn = document.getElementById("downloadBtn");
-      if (btn) {
+      document.getElementById("uploadForm")?.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const form = e.target;
+        const file = form.file.files[0];
+        const job = form.job.value;
+
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = async function () {
+          const text = reader.result;
+          uploadModal.classList.add("hidden");
+          previewSection.classList.remove("hidden");
+
+          try {
+            const res = await fetch("https://fazzy112.app.n8n.cloud/webhook/d51b6722-8fee-4b07-a113-466a66b43e51", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ old_resume: text, job: job })
+            });
+            const result = await res.json();
+            document.getElementById("resumeOutput").textContent = result.resume || "[Generated updated resume here]";
+            document.getElementById("resumeScore").textContent = result.score || "90";
+          } catch (err) {
+            document.getElementById("resumeOutput").textContent = "Error processing uploaded resume.";
+          }
+        };
+        reader.readAsText(file);
+      });
+
+      const downloadBtn = document.getElementById("downloadBtn");
+      if (downloadBtn) {
         setTimeout(() => {
-          btn.disabled = false;
-          btn.textContent = "✅ Click to Download";
+          downloadBtn.disabled = false;
+          downloadBtn.textContent = "✅ Click to Download";
         }, 30000);
 
-        btn.addEventListener("click", () => {
+        downloadBtn.addEventListener("click", () => {
           alert("Your resume is downloading...");
         });
       }
