@@ -85,10 +85,22 @@ import Layout from '../layouts/Layout.astro';
       const uploadModal = document.getElementById("uploadModal");
       const previewSection = document.getElementById("previewSection");
 
-      document.getElementById("formBtn").onclick = () => formModal.classList.remove("hidden");
-      document.getElementById("uploadBtnTrigger").onclick = () => uploadModal.classList.remove("hidden");
-      document.getElementById("closeFormBtn").onclick = () => formModal.classList.add("hidden");
-      document.getElementById("closeUploadBtn").onclick = () => uploadModal.classList.add("hidden");
+      document.getElementById("formBtn").onclick = () => {
+        formModal.classList.remove("hidden");
+        formModal.classList.add("flex");
+      };
+      document.getElementById("uploadBtnTrigger").onclick = () => {
+        uploadModal.classList.remove("hidden");
+        uploadModal.classList.add("flex");
+      };
+      document.getElementById("closeFormBtn").onclick = () => {
+        formModal.classList.add("hidden");
+        formModal.classList.remove("flex");
+      };
+      document.getElementById("closeUploadBtn").onclick = () => {
+        uploadModal.classList.add("hidden");
+        uploadModal.classList.remove("flex");
+      };
 
       document.getElementById("resumeForm")?.addEventListener("submit", async function (e) {
         e.preventDefault();
@@ -100,6 +112,7 @@ import Layout from '../layouts/Layout.astro';
         };
 
         formModal.classList.add("hidden");
+        formModal.classList.remove("flex");
         previewSection.classList.remove("hidden");
 
         try {
@@ -127,6 +140,7 @@ import Layout from '../layouts/Layout.astro';
         reader.onload = async function () {
           const text = reader.result;
           uploadModal.classList.add("hidden");
+          uploadModal.classList.remove("flex");
           previewSection.classList.remove("hidden");
 
           try {
