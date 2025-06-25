@@ -142,25 +142,32 @@ import Layout from '../layouts/Layout.astro';
         if (!file) return;
         const reader = new FileReader();
         reader.onload = async function () {
-          const text = reader.result;
-          uploadModal.classList.add("hidden");
-          uploadModal.classList.remove("flex");
-          previewSection.classList.remove("hidden");
+  const text = reader.result;
 
-          try {
-            const res = await fetch("https://fazzy112.app.n8n.cloud/webhook/d51b6722-8fee-4b07-a113-466a66b43e51", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ old_resume: text, job: job })
-            });
-            const result = await res.json();
-            document.getElementById("resumeOutput").textContent = result.resume || "[Generated updated resume here]";
-            document.getElementById("resumeScore").textContent = result.score || "90";
-          } catch (err) {
-            document.getElementById("resumeOutput").textContent = "Error processing uploaded resume.";
-          }
-        };
-        reader.readAsText(file);
+  // Show loading message while waiting
+  previewSection.classList.remove("hidden");
+  document.getElementById("resumeOutput").textContent = "⏳ Generating resume, please wait...";
+  document.getElementById("resumeScore").textContent = "-";
+
+  try {
+    const res = await fetch("https://fazzy112.app.n8n.cloud/webhook/d51b6722-8fee-4b07-a113-466a66b43e51", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ old_resume: text, job: job })
+    });
+    const result = await res.json();
+
+    document.getElementById("resumeOutput").textContent = result.resume || "[Generated updated resume here]";
+    document.getElementById("resumeScore").textContent = result.score || "90";
+
+    // Now hide the modal
+    uploadModal.classList.add("hidden");
+    uploadModal.classList.remove("flex");
+  } catch (err) {
+    document.getElementById("resumeOutput").textContent = "❌ Error processing uploaded resume.";
+  }
+};
+reader.readAsText(file);
       });
 
       const downloadBtn = document.getElementById("downloadBtn");
