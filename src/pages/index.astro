@@ -1,28 +1,179 @@
-<div id="formModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
-  <div class="flex justify-center items-center h-full w-full">
-    <div class="bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 text-white p-8 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
-      <h3 class="text-xl font-bold mb-4">Enter Your Resume Details</h3>
-      <form id="resumeForm" class="space-y-4">
-        <input type="text" name="name" placeholder="Full Name" class="w-full p-2 border rounded text-black" required>
-        <input type="text" name="title" placeholder="Job Title" class="w-full p-2 border rounded text-black">
-        <textarea name="summary" placeholder="Professional Summary" class="w-full p-2 border rounded text-black"></textarea>
-        <button type="submit" class="bg-indigo-700 text-white px-4 py-2 rounded">Generate Resume</button>
-        <button type="button" id="closeFormBtn" class="ml-2 text-white">Cancel</button>
-      </form>
-    </div>
-  </div>
-</div>
+---
+import Layout from '../layouts/Layout.astro';
+---
 
-<div id="uploadModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
-  <div class="flex justify-center items-center h-full w-full">
-    <div class="bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 text-white p-8 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
-      <h3 class="text-xl font-bold mb-4">Upload Your Old Resume</h3>
-      <form id="uploadForm" class="space-y-4">
-        <input type="file" name="file" accept=".pdf,.doc,.docx" required class="w-full text-black">
-        <textarea name="job" placeholder="Paste Job Description or Title" class="w-full p-2 border rounded text-black"></textarea>
-        <button type="submit" class="bg-pink-700 text-white px-4 py-2 rounded">Generate Resume</button>
-        <button type="button" id="closeUploadBtn" class="ml-2 text-white">Cancel</button>
-      </form>
+<Layout>
+  <main class="min-h-screen w-full text-gray-900 bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500">
+
+    <!-- Hero Section -->
+    <section class="text-center py-20 px-4">
+      <h1 class="text-5xl font-bold text-white mb-4">Build Your Resume with AI</h1>
+      <p class="text-xl text-white mb-8">Smart, Fast, and Professional Resume and Cover Letter Builder</p>
+      <div class="flex justify-center gap-4">
+        <button id="formBtn" class="bg-white text-purple-700 font-bold py-3 px-6 rounded-2xl shadow-md hover:scale-105 transition">Generate from Form</button>
+        <button id="uploadBtnTrigger" class="bg-white text-pink-700 font-bold py-3 px-6 rounded-2xl shadow-md hover:scale-105 transition">Upload Existing Resume</button>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="bg-white text-gray-800 py-16 px-6">
+      <h2 class="text-3xl font-bold text-center mb-10">How It Works</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div class="text-center">
+          <div class="text-5xl mb-4">📝</div>
+          <h3 class="text-xl font-semibold mb-2">1. Input Details</h3>
+          <p>Fill out the form or upload your old resume with job description.</p>
+        </div>
+        <div class="text-center">
+          <div class="text-5xl mb-4">🤖</div>
+          <h3 class="text-xl font-semibold mb-2">2. AI Generates Resume</h3>
+          <p>Our AI instantly creates your resume & cover letter with a score.</p>
+        </div>
+        <div class="text-center">
+          <div class="text-5xl mb-4">📥</div>
+          <h3 class="text-xl font-semibold mb-2">3. Download</h3>
+          <p>Watch a 30-sec ad to unlock and auto-download your resume.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resume Preview Section -->
+    <section id="previewSection" class="bg-gray-50 py-16 px-6 hidden">
+      <h2 class="text-3xl font-bold text-center mb-6">Your AI-Generated Resume</h2>
+      <div class="bg-white shadow-xl rounded-xl p-6 max-w-3xl mx-auto">
+        <pre id="resumeOutput" class="mb-4 text-gray-700 whitespace-pre-wrap">[Resume Content Here]</pre>
+        <p class="text-green-600 font-semibold">Score: <span id="resumeScore">85</span> / 100</p>
+        <button id="downloadBtn" class="mt-6 bg-green-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-green-700" disabled>⏳ Watch Ad to Download</button>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-white py-10 text-center">
+      <p>&copy; 2025 Resumia. All rights reserved.</p>
+    </footer>
+  </main>
+
+  <!-- Modals -->
+  <div id="formModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+    <div class="flex justify-center items-center h-full w-full">
+      <div class="bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 text-white p-8 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+        <h3 class="text-xl font-bold mb-4">Enter Your Resume Details</h3>
+        <form id="resumeForm" class="space-y-4">
+          <input type="text" name="name" placeholder="Full Name" class="w-full p-2 border rounded text-black" required>
+          <input type="text" name="title" placeholder="Job Title" class="w-full p-2 border rounded text-black">
+          <textarea name="summary" placeholder="Professional Summary" class="w-full p-2 border rounded text-black"></textarea>
+          <button type="submit" class="bg-indigo-700 text-white px-4 py-2 rounded">Generate Resume</button>
+          <button type="button" id="closeFormBtn" class="ml-2 text-white">Cancel</button>
+        </form>
+      </div>
     </div>
   </div>
-</div>
+
+  <div id="uploadModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+    <div class="flex justify-center items-center h-full w-full">
+      <div class="bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 text-white p-8 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+        <h3 class="text-xl font-bold mb-4">Upload Your Old Resume</h3>
+        <form id="uploadForm" class="space-y-4">
+          <input type="file" name="file" accept=".pdf,.doc,.docx" required class="w-full text-black">
+          <textarea name="job" placeholder="Paste Job Description or Title" class="w-full p-2 border rounded text-black"></textarea>
+          <button type="submit" class="bg-pink-700 text-white px-4 py-2 rounded">Generate Resume</button>
+          <button type="button" id="closeUploadBtn" class="ml-2 text-white">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const formModal = document.getElementById("formModal");
+      const uploadModal = document.getElementById("uploadModal");
+      const previewSection = document.getElementById("previewSection");
+
+      document.getElementById("formBtn").onclick = () => {
+        formModal.classList.remove("hidden");
+        formModal.classList.add("flex");
+      };
+      document.getElementById("uploadBtnTrigger").onclick = () => {
+        uploadModal.classList.remove("hidden");
+        uploadModal.classList.add("flex");
+      };
+      document.getElementById("closeFormBtn").onclick = () => {
+        formModal.classList.add("hidden");
+        formModal.classList.remove("flex");
+      };
+      document.getElementById("closeUploadBtn").onclick = () => {
+        uploadModal.classList.add("hidden");
+        uploadModal.classList.remove("flex");
+      };
+
+      document.getElementById("resumeForm")?.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const form = e.target;
+        const data = {
+          name: form.name.value,
+          title: form.title.value,
+          summary: form.summary.value,
+        };
+
+        formModal.classList.add("hidden");
+        formModal.classList.remove("flex");
+        previewSection.classList.remove("hidden");
+
+        try {
+          const res = await fetch("https://fazzy112.app.n8n.cloud/webhook/d51b6722-8fee-4b07-a113-466a66b43e51", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+          });
+          const result = await res.json();
+          document.getElementById("resumeOutput").textContent = result.resume || "[Generated resume text here]";
+          document.getElementById("resumeScore").textContent = result.score || "85";
+        } catch (err) {
+          document.getElementById("resumeOutput").textContent = "Error generating resume. Please try again.";
+        }
+      });
+
+      document.getElementById("uploadForm")?.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const form = e.target;
+        const file = form.file.files[0];
+        const job = form.job.value;
+
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = async function () {
+          const text = reader.result;
+          uploadModal.classList.add("hidden");
+          uploadModal.classList.remove("flex");
+          previewSection.classList.remove("hidden");
+
+          try {
+            const res = await fetch("https://fazzy112.app.n8n.cloud/webhook/d51b6722-8fee-4b07-a113-466a66b43e51", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ old_resume: text, job: job })
+            });
+            const result = await res.json();
+            document.getElementById("resumeOutput").textContent = result.resume || "[Generated updated resume here]";
+            document.getElementById("resumeScore").textContent = result.score || "90";
+          } catch (err) {
+            document.getElementById("resumeOutput").textContent = "Error processing uploaded resume.";
+          }
+        };
+        reader.readAsText(file);
+      });
+
+      const downloadBtn = document.getElementById("downloadBtn");
+      if (downloadBtn) {
+        setTimeout(() => {
+          downloadBtn.disabled = false;
+          downloadBtn.textContent = "✅ Click to Download";
+        }, 30000);
+
+        downloadBtn.addEventListener("click", () => {
+          alert("Your resume is downloading...");
+        });
+      }
+    });
+  </script>
+</Layout>
