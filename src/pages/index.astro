@@ -3,118 +3,85 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout>
-  <main class="container mx-auto px-4 py-20 text-center">
+  <main class="min-h-screen w-full text-gray-900 bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500">
 
-<!-- Hero Section -->
-<section class="mb-20">
-  <h1 class="text-5xl font-bold mb-6 text-blue-800">
-    Create Your Resume Instantly with AI
-  </h1>
-  <p class="text-xl text-gray-600 mb-8">
-    Resumia helps job seekers, students, and freelancers build professional, ATS-friendly resumes and cover letters — in seconds.
-  </p>
-</section>
-
-<!-- Resume Form Section -->
-<section class="mt-10 bg-white py-10 rounded-lg shadow-md">
-  <h2 class="text-3xl font-semibold mb-6 text-blue-800 text-center">Start Building Your Resume</h2>
-  <form id="resumeForm" class="max-w-2xl mx-auto grid gap-4 text-left px-4">
-    <input type="text" name="firstName" placeholder="First Name" required class="border px-4 py-2 rounded bg-white text-black w-full" />
-    <input type="text" name="lastName" placeholder="Last Name" required class="border px-4 py-2 rounded bg-white text-black w-full" />
-    <input type="email" name="email" placeholder="Email" required class="border px-4 py-2 rounded bg-white text-black w-full" />
-    <input type="tel" name="phone" placeholder="Phone Number" required class="border px-4 py-2 rounded bg-white text-black w-full" />
-    <input type="text" name="education" placeholder="Education" required class="border px-4 py-2 rounded bg-white text-black w-full" />
-    <input type="text" name="experience" placeholder="Experience" required class="border px-4 py-2 rounded bg-white text-black w-full" />
-    <input type="text" name="skills" placeholder="Skills (comma-separated)" required class="border px-4 py-2 rounded bg-white text-black w-full" />
-    <textarea name="objective" placeholder="Career Objective" required class="border px-4 py-2 rounded bg-white text-black w-full"></textarea>
-    
-    <button type="submit" class="bg-blue-600 text-white py-2 px-6 rounded hover:bg-blue-700 transition">
-      Submit & Generate Resume
-    </button>
-  </form>
-</section>
+    <!-- Hero Section -->
+    <section class="text-center py-20 px-4">
+      <h1 class="text-5xl font-bold text-white mb-4">Build Your Resume with AI</h1>
+      <p class="text-xl text-white mb-8">Smart, Fast, and Professional Resume and Cover Letter Builder</p>
+      <div class="flex justify-center gap-4">
+        <button onclick="openFormModal()" class="bg-white text-purple-700 font-bold py-3 px-6 rounded-2xl shadow-md hover:scale-105 transition">Generate from Form</button>
+        <button onclick="openUploadModal()" class="bg-white text-pink-700 font-bold py-3 px-6 rounded-2xl shadow-md hover:scale-105 transition">Upload Existing Resume</button>
+      </div>
+    </section>
 
     <!-- How It Works -->
-    <section class="mb-20">
-      <h2 class="text-3xl font-semibold mb-6 text-blue-800">How It Works</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-        <div class="bg-white shadow-md rounded-lg p-6">
-          <h3 class="text-xl font-bold mb-2">1. Fill the Form</h3>
-          <p class="text-gray-600">Enter your details or upload an old resume and job description.</p>
+    <section class="bg-white text-gray-800 py-16 px-6">
+      <h2 class="text-3xl font-bold text-center mb-10">How It Works</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div class="text-center">
+          <div class="text-5xl mb-4">📝</div>
+          <h3 class="text-xl font-semibold mb-2">1. Input Details</h3>
+          <p>Fill out the form or upload your old resume with job description.</p>
         </div>
-        <div class="bg-white shadow-md rounded-lg p-6">
-          <h3 class="text-xl font-bold mb-2">2. Let AI Build It</h3>
-          <p class="text-gray-600">AI creates a tailored resume and cover letter based on your input.</p>
+        <div class="text-center">
+          <div class="text-5xl mb-4">🤖</div>
+          <h3 class="text-xl font-semibold mb-2">2. AI Generates Resume</h3>
+          <p>Our AI instantly creates your resume & cover letter with a score.</p>
         </div>
-        <div class="bg-white shadow-md rounded-lg p-6">
-          <h3 class="text-xl font-bold mb-2">3. View Score & Download</h3>
-          <p class="text-gray-600">Get instant score, tips, and download after viewing a short ad.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="mb-20">
-      <h2 class="text-3xl font-semibold mb-6 text-blue-800">Features</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-        <div class="bg-white shadow p-6 rounded-lg">
-          <h3 class="text-lg font-bold text-blue-700">AI Resume Builder</h3>
-          <p class="text-gray-600">Generate professional resumes based on your experience, skills, and job goals.</p>
-        </div>
-        <div class="bg-white shadow p-6 rounded-lg">
-          <h3 class="text-lg font-bold text-blue-700">Cover Letter Generator</h3>
-          <p class="text-gray-600">Instantly get a customized cover letter that matches your resume.</p>
-        </div>
-        <div class="bg-white shadow p-6 rounded-lg">
-          <h3 class="text-lg font-bold text-blue-700">Resume Score</h3>
-          <p class="text-gray-600">Get feedback, strengths, and improvement tips before applying.</p>
-        </div>
-        <div class="bg-white shadow p-6 rounded-lg">
-          <h3 class="text-lg font-bold text-blue-700">PDF / Word Download</h3>
-          <p class="text-gray-600">Download your resume in your preferred format after watching an ad.</p>
-        </div>
-        <div class="bg-white shadow p-6 rounded-lg">
-          <h3 class="text-lg font-bold text-blue-700">LinkedIn Import (Coming Soon)</h3>
-          <p class="text-gray-600">Auto-fill your resume using your LinkedIn profile data.</p>
-        </div>
-        <div class="bg-white shadow p-6 rounded-lg">
-          <h3 class="text-lg font-bold text-blue-700">Mobile Friendly</h3>
-          <p class="text-gray-600">Use Resumia on any device, anytime.</p>
+        <div class="text-center">
+          <div class="text-5xl mb-4">📥</div>
+          <h3 class="text-xl font-semibold mb-2">3. Download</h3>
+          <p>Watch a 30-sec ad to unlock and auto-download your resume.</p>
         </div>
       </div>
     </section>
 
-    <!-- Call to Action (optional second form embed) -->
-<section class="mt-20 bg-blue-50 py-10 rounded-lg">
-  <h2 class="text-3xl font-semibold mb-4 text-blue-800">Ready to Build Your Resume?</h2>
-  <p class="text-gray-700 mb-6">Let AI handle the formatting, language, and layout — you focus on landing the job.</p>
-  <div class="w-full max-w-2xl mx-auto">
-    <!-- Removed iframe here to prevent double embed -->
-  </div>
-</section>
-</main>
+    <!-- Resume Preview Section (Simulated) -->
+    <section id="previewSection" class="bg-gray-50 py-16 px-6 hidden">
+      <h2 class="text-3xl font-bold text-center mb-6">Your AI-Generated Resume</h2>
+      <div class="bg-white shadow-xl rounded-xl p-6 max-w-3xl mx-auto">
+        <p class="mb-4 text-gray-700">[Resume Content Here]</p>
+        <p class="text-green-600 font-semibold">Score: 85 / 100</p>
+        <button id="downloadBtn" class="mt-6 bg-green-600 text-white font-bold py-3 px-6 rounded-xl hover:bg-green-700" disabled>⏳ Watch Ad to Download</button>
+      </div>
+    </section>
 
-<script>
-  const form = document.getElementById("resumeForm");
-  if (form) {
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
+    <!-- Footer -->
+    <footer class="text-white py-10 text-center">
+      <p>&copy; 2025 Resumia. All rights reserved.</p>
+    </footer>
+  </main>
 
-      const formData = {
-        firstName: form.firstName.value,
-        lastName: form.lastName.value,
-        email: form.email.value,
-        phone: form.phone.value,
-        education: form.education.value,
-        experience: form.experience.value,
-        skills: form.skills.value,
-        objective: form.objective.value
-      };
+  <!-- Modals and JS -->
+  <script>
+    function openFormModal() {
+      alert("Form modal opened (to be implemented)");
+      // Show animation, send to n8n webhook, etc.
+      document.getElementById("previewSection").classList.remove("hidden");
+    }
 
-      localStorage.setItem("resumeFormData", JSON.stringify(formData));
-      window.location.href = "/processing";
+    function openUploadModal() {
+      alert("Upload modal opened (to be implemented)");
+      // Upload file, parse, send to backend, etc.
+      document.getElementById("previewSection").classList.remove("hidden");
+    }
+
+    // Simulate ad watch logic for download button
+    document.addEventListener('DOMContentLoaded', function() {
+      const btn = document.getElementById("downloadBtn");
+      if (btn) {
+        setTimeout(() => {
+          btn.disabled = false;
+          btn.textContent = "✅ Click to Download";
+        }, 30000); // 30 seconds
+
+        btn.addEventListener("click", () => {
+          // Simulate file download
+          alert("Your resume is downloading...");
+          // window.location.href = 'resume.pdf';
+        });
+      }
     });
-  }
-</script>
-
+  </script>
 </Layout>
