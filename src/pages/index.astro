@@ -1,18 +1,32 @@
 ---
-// No frontmatter needed
+import Hero from "../components/Hero.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import ResumeFormModal from "../components/ResumeFormModal.astro";
+import UploadResumeModal from "../components/UploadResumeModal.astro";
+import ResumePreviewModal from "../components/ResumePreviewModal.astro";
 ---
 
-<section class="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 py-20 text-white text-center">
-  <div class="container mx-auto px-4">
-    <h1 class="text-4xl md:text-6xl font-bold mb-6">Create Your Resume Instantly with AI</h1>
-    <p class="text-lg md:text-2xl mb-8">Resumia helps job seekers build professional, tailored resumes in seconds.</p>
-    <div class="flex justify-center gap-4">
-      <button id="open-resume-form" class="bg-white text-blue-600 font-semibold py-2 px-6 rounded-full shadow hover:bg-gray-100 transition">
-        Start from Scratch
-      </button>
-      <button id="open-upload-resume" class="bg-transparent border border-white py-2 px-6 rounded-full hover:bg-white hover:text-blue-600 transition">
-        Upload Existing Resume
-      </button>
-    </div>
-  </div>
-</section>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resumia - AI Resume Builder</title>
+    <link rel="stylesheet" href="/styles/tailwind.css">
+  </head>
+  <body class="bg-gray-50 text-gray-800">
+    <Navbar />
+    <Hero />
+
+    <!-- Placeholder for additional sections like features, testimonials -->
+
+    <Footer />
+
+    <!-- Modals -->
+    <ResumeFormModal />
+    <UploadResumeModal />
+    <ResumePreviewModal />
+
+    <script src="/scripts/modal.js"></script>
+  </body>
+</html>
