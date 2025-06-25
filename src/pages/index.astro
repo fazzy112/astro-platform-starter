@@ -1,32 +1,14 @@
 ---
-import Hero from "../components/Hero.astro";
-import Navbar from "../components/Navbar.astro";
-import Footer from "../components/Footer.astro";
-import ResumeFormModal from "../components/ResumeFormModal.astro";
-import UploadResumeModal from "../components/UploadResumeModal.astro";
-import ResumePreviewModal from "../components/ResumePreviewModal.astro";
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import Features from '../components/Features.astro';
+import Steps from '../components/Steps.astro';
+import Modals from '../components/Modals.astro';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Resumia - AI Resume Builder</title>
-    <link rel="stylesheet" href="/styles/tailwind.css">
-  </head>
-  <body class="bg-gray-50 text-gray-800">
-    <Navbar />
-    <Hero />
-
-    <!-- Placeholder for additional sections like features, testimonials -->
-
-    <Footer />
-
-    <!-- Modals -->
-    <ResumeFormModal />
-    <UploadResumeModal />
-    <ResumePreviewModal />
-
-    <script src="/scripts/modal.js"></script>
-  </body>
-</html>
+<Layout title="Resumia AI – Build Your Resume">
+  <Hero />
+  <Features />
+  <Steps />
+  <Modals />
+</Layout>
