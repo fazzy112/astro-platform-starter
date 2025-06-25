@@ -1,1 +1,87 @@
+---
+// Modals.astro
+---
+<div id="modals">
+  <!-- Resume Form Modal -->
+  <div id="resume-form-modal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg w-full max-w-3xl p-6 relative">
+      <button id="close-resume-form" class="absolute top-4 right-4 text-gray-600 hover:text-red-500 text-xl">&times;</button>
+      <h2 class="text-xl font-semibold text-indigo-700 mb-2">Build Your Resume</h2>
+      <p class="text-gray-500 mb-6 text-sm">Fill in your details and get a professional resume.</p>
+      <form id="resume-form" class="grid grid-cols-1 gap-4">
+        <input id="form-first-name" type="text" placeholder="First Name" class="input" />
+        <input id="form-last-name" type="text" placeholder="Last Name" class="input" />
+        <input id="form-email" type="email" placeholder="Email" class="input" />
+        <input id="form-phone" type="text" placeholder="Phone Number" class="input" />
+        <input id="form-job-title" type="text" placeholder="Target Job Title" class="input" />
+        <textarea id="form-education" placeholder="Education" rows="2" class="input"></textarea>
+        <textarea id="form-experience" placeholder="Work Experience" rows="3" class="input"></textarea>
+        <textarea id="form-skills" placeholder="Skills" rows="2" class="input"></textarea>
+        <label class="inline-flex items-center space-x-2 text-sm text-gray-700">
+          <input id="cover-letter" type="checkbox" class="h-4 w-4 text-indigo-600" />
+          <span>Also generate a cover letter</span>
+        </label>
+        <div class="flex justify-end space-x-2 mt-4">
+          <button id="cancel-resume-form" type="button" class="btn-secondary">Cancel</button>
+          <button type="submit" class="btn-primary">Generate Resume</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
+  <!-- Upload Resume Modal -->
+  <div id="upload-resume-modal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg w-full max-w-2xl p-6 relative">
+      <button id="close-upload-resume" class="absolute top-4 right-4 text-gray-600 hover:text-red-500 text-xl">&times;</button>
+      <h2 class="text-xl font-semibold text-indigo-700 mb-2">Upload Existing Resume</h2>
+      <p class="text-gray-500 mb-6 text-sm">We'll enhance your old resume using AI.</p>
+      <form id="upload-form" class="space-y-4">
+        <input id="file-upload" type="file" class="w-full border p-2 rounded" accept=".pdf,.doc,.docx" />
+        <textarea id="job-description" placeholder="Target Job Description" rows="3" class="input"></textarea>
+        <label class="inline-flex items-center space-x-2 text-sm text-gray-700">
+          <input id="upload-cover-letter" type="checkbox" class="h-4 w-4 text-indigo-600" />
+          <span>Also generate a cover letter</span>
+        </label>
+        <div class="flex justify-end space-x-2 mt-4">
+          <button id="cancel-upload-form" type="button" class="btn-secondary">Cancel</button>
+          <button type="submit" class="btn-primary">Enhance Resume</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Resume Preview Modal -->
+  <div id="resume-preview-modal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg w-full max-w-4xl p-6 relative">
+      <button id="close-preview" class="absolute top-4 right-4 text-gray-600 hover:text-red-500 text-xl">&times;</button>
+      <h2 class="text-xl font-semibold text-indigo-700 mb-2">Your AI-Enhanced Resume</h2>
+      <div class="bg-gray-50 p-4 rounded border mt-4">
+        <h3 class="font-medium text-gray-700">Resume Score</h3>
+        <div class="flex items-center mt-1 mb-3">
+          <div class="text-2xl font-bold text-indigo-600">92</div><span class="text-gray-500 ml-1">/100</span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2.5">
+          <div class="bg-gradient-to-r from-indigo-600 to-purple-600 h-2.5 rounded-full" style="width: 92%"></div>
+        </div>
+        <div class="mt-4">
+          <h4 class="text-sm font-semibold mb-1">Strengths:</h4>
+          <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+            <li>Clear experience with achievements</li>
+            <li>Relevant keywords</li>
+            <li>Professional structure</li>
+          </ul>
+        </div>
+        <div class="mt-3">
+          <h4 class="text-sm font-semibold mb-1">Improvements:</h4>
+          <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+            <li>Add more recent metrics</li>
+            <li>Use more industry keywords</li>
+          </ul>
+        </div>
+        <div class="mt-6 text-right">
+          <button class="btn-primary">Watch Ad to Download</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
