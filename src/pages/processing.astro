@@ -3,46 +3,55 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout>
-  <main class="container mx-auto px-4 py-20 text-center">
-    <h1 class="text-4xl font-bold text-blue-700 mb-4">Generating Your Resume...</h1>
-    <p class="text-lg text-gray-600 mb-10">Please wait a few seconds while we process your details with AI.</p>
+  <main class="min-h-screen flex flex-col items-center justify-center text-center bg-gradient-to-br from-blue-50 to-white px-4">
+    <!-- Processing Spinner -->
+    <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-600 border-opacity-50 mb-6"></div>
+    <h1 class="text-3xl font-semibold text-blue-800 mb-2">Generating Your Resume...</h1>
+    <p class="text-gray-600 mb-6">Please wait a few seconds while our AI builds your resume, cover letter, and calculates your score.</p>
 
-    <div class="flex justify-center">
-      <svg class="animate-spin h-10 w-10 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
-      </svg>
-    </div>
+    <!-- Optional Loading Tips -->
+    <ul class="text-gray-500 text-sm space-y-1">
+      <li>✔️ Tailoring your resume for the job description...</li>
+      <li>✔️ Writing your personalized cover letter...</li>
+      <li>✔️ Scoring your resume for strengths & improvements...</li>
+    </ul>
   </main>
 
+  <!-- Auto-Redirect Script -->
   <script>
-    // Wait 2 seconds and then send data to n8n
-    setTimeout(async () => {
+    // Simulate loading and fetch data from localStorage to send to your workflow
+    setTimeout(() => {
       const data = JSON.parse(localStorage.getItem("resumeFormData"));
+      if (!data) return alert("No form data found. Please go back and try again.");
 
-      if (!data) {
-        window.location.href = "/"; // fallback if no data found
-        return;
-      }
+      const query = new URLSearchParams({
+        firstName: data.firstName || "",
+        lastName: data.lastName || "",
+        email: data.email || "",
+        phone: data.phone || "",
+        education: data.education || "",
+        experience: data.experience || "",
+        skills: data.skills || "",
+        objective: data.objective || ""
+      });
 
-      try {
-        const response = await fetch("https://YOUR_N8N_WEBHOOK_URL", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(data)
+      // Send data to n8n webhook
+      fetch("https://n8n.YOUR_DOMAIN_OR_HOSTNAME/webhook/your_workflow_path", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(Object.fromEntries(query)),
+      })
+        .then(res => res.json())
+        .then(response => {
+          const { resume, coverLetter, score, strengths, improvements } = response;
+          // Store results in localStorage
+          localStorage.setItem("aiResumeResult", JSON.stringify({ resume, coverLetter, score, strengths, improvements }));
+          window.location.href = "/score";
+        })
+        .catch(error => {
+          console.error("Failed to fetch resume:", error);
+          alert("There was an error generating your resume. Please try again.");
         });
-
-        const result = await response.json();
-
-        // Redirect to score page with query params
-        const redirectUrl = `/score?score=${result.score}&strengths=${encodeURIComponent(result.strengths)}&improvements=${encodeURIComponent(result.improvements)}`;
-        window.location.href = redirectUrl;
-      } catch (error) {
-        alert("There was an error processing your request.");
-        window.location.href = "/";
-      }
-    }, 2000);
+    }, 3000);
   </script>
 </Layout>
