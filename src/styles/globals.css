@@ -2,24 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-@import 'tailwindcss';
+/* ✅ Remove this - it's unnecessary and may break build */
+// @import 'tailwindcss';
 
-/* Custom Theme Variables */
-@theme {
+/* ✅ You cannot use `@theme` directly like this in Tailwind */
+:root {
   --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   --color-primary: #f67280;
   --color-primary-content: #101828;
   --color-complementary: #355c7d;
-  --background-image-noise: linear-gradient(
-    to bottom,
-    color-mix(in oklab, var(--color-gray-950) 0%, transparent),
-    color-mix(in oklab, var(--color-gray-950) 100%, transparent)
-  ),
-  url('/images/noise.png');
+  --background-image-noise: 
+    linear-gradient(
+      to bottom,
+      color-mix(in oklab, rgb(3, 7, 18) 0%, transparent),
+      color-mix(in oklab, rgb(3, 7, 18) 100%, transparent)
+    ),
+    url('/images/noise.png');
 }
 
-/* Base Element Styles */
+/* Base Styles */
 @layer base {
+  html {
+    scroll-behavior: smooth; /* ✅ Added smooth scrolling here */
+  }
+
   h1 {
     @apply text-4xl font-bold tracking-tight sm:text-5xl;
   }
@@ -42,7 +48,7 @@
   }
 }
 
-/* Components and Utilities */
+/* Components */
 @layer components {
   .markdown {
     > * {
@@ -75,9 +81,7 @@
   }
 
   .btn-lg {
-    --btn-font-size: 1.125rem;
-    --btn-px: 1.5rem;
-    --btn-py: 1.125rem;
+    @apply text-lg px-6 py-3;
   }
 
   .input {
