@@ -1,53 +1,33 @@
----
-import Layout from '../layouts/Layout.astro';
----
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const openModalBtn = document.querySelector(".btn-primary");
+    const modal = document.getElementById("resume-form-modal");
+    const form = document.getElementById("resume-form");
 
-<Layout>
-  <main class="min-h-screen flex flex-col items-center justify-center text-center bg-gradient-to-br from-blue-50 to-white px-4">
-    <!-- Processing Spinner -->
-    <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-600 border-opacity-50 mb-6"></div>
-    <h1 class="text-3xl font-semibold text-blue-800 mb-2">Generating Your Resume...</h1>
-    <p class="text-gray-600 mb-6">Please wait a few seconds while our AI builds your resume, cover letter, and calculates your score.</p>
-
-    <!-- Optional Loading Tips -->
-    <ul class="text-gray-500 text-sm space-y-1">
-      <li>✔️ Tailoring your resume for the job description...</li>
-      <li>✔️ Writing your personalized cover letter...</li>
-      <li>✔️ Scoring your resume for strengths & improvements...</li>
-    </ul>
-  </main>
-
-  <!-- Auto-Redirect Script -->
-  <script>
-    setTimeout(() => {
-      const data = JSON.parse(localStorage.getItem("resumeFormData"));
-      if (!data) {
-        alert("No form data found. Please go back and fill the form again.");
-        return;
-      }
-
-      fetch("https://n8n.YOUR_DOMAIN/webhook/your_workflow_path", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      })
-      .then(response => response.json())
-      .then(result => {
-        // Save AI results to localStorage
-        localStorage.setItem("aiResumeResult", JSON.stringify({
-          resume: result.resume || "",
-          coverLetter: result.coverLetter || "",
-          score: result.score || 0,
-          strengths: result.strengths || "",
-          improvements: result.improvements || ""
-        }));
-        // Redirect to score page
-        window.location.href = "/score";
-      })
-      .catch(error => {
-        console.error("Error generating resume:", error);
-        alert("Something went wrong. Please try again.");
+    if (openModalBtn && modal) {
+      openModalBtn.addEventListener("click", () => {
+        modal.classList.remove("hidden");
       });
-    }, 3000);
-  </script>
-</Layout>
+    }
+
+    if (form) {
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const formData = {
+          name: form.name.value,
+          email: form.email.value,
+          job: form.job.value,
+          education: form.education.value,
+          experience: form.experience.value,
+          skills: form.skills.value,
+          coverLetter: form["cover-letter"].checked
+        };
+
+        localStorage.setItem("resumeFormData", JSON.stringify(formData));
+        modal.classList.add("hidden");
+        window.location.href = "/processing";
+      });
+    }
+  });
+</script>
