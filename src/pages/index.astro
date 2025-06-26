@@ -1,8 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ResumeFormModal from '../components/ResumeFormModal.astro';
 ---
 
 <Layout title="ResumeAI - Create Your AI-Powered Resume Instantly">
+  <!-- Modals -->
+  <ResumeFormModal />
 
   <!-- Hero Section -->
   <section class="relative overflow-hidden pt-16 pb-24 px-4 bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 text-white">
@@ -20,7 +23,7 @@ import Layout from '../layouts/Layout.astro';
         </div>
       </div>
       <div class="lg:col-span-6 flex justify-center">
-        <img class="rounded-lg shadow-lg" src="/images/resume-preview.svg" alt="Resume Preview">
+        <img class="rounded-lg shadow-lg" src="/images/resume-preview.svg" alt="Resume Preview" />
       </div>
     </div>
   </section>
@@ -31,93 +34,23 @@ import Layout from '../layouts/Layout.astro';
       <h2 class="text-3xl font-extrabold text-center">How It Works</h2>
       <p class="mt-4 text-xl text-center text-gray-500">Create your professional resume in just four simple steps</p>
       <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <!-- Steps 1–4 -->
-        <div class="bg-white shadow rounded-lg p-6 text-center">
-          <div class="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex items-center justify-center text-2xl font-bold">1</div>
-          <h3 class="mt-4 font-medium text-lg">Fill</h3>
-          <p class="mt-2 text-sm text-gray-600">Enter your details or upload your existing resume to get started</p>
-        </div>
-        <div class="bg-white shadow rounded-lg p-6 text-center">
-          <div class="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex items-center justify-center text-2xl font-bold">2</div>
-          <h3 class="mt-4 font-medium text-lg">Generate</h3>
-          <p class="mt-2 text-sm text-gray-600">Our AI analyzes and creates an optimized resume tailored to your target job</p>
-        </div>
-        <div class="bg-white shadow rounded-lg p-6 text-center">
-          <div class="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex items-center justify-center text-2xl font-bold">3</div>
-          <h3 class="mt-4 font-medium text-lg">Preview</h3>
-          <p class="mt-2 text-sm text-gray-600">Review your professionally formatted resume and see your resume score</p>
-        </div>
-        <div class="bg-white shadow rounded-lg p-6 text-center">
-          <div class="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white flex items-center justify-center text-2xl font-bold">4</div>
-          <h3 class="mt-4 font-medium text-lg">Download</h3>
-          <p class="mt-2 text-sm text-gray-600">Watch a short ad and download your ready-to-use resume</p>
-        </div>
+        <!-- Step Cards... -->
       </div>
     </div>
   </section>
 
-  <!-- Why Use Resumia -->
-  <section class="py-16 bg-gray-50 text-gray-900">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <h2 class="text-3xl font-extrabold">Why Use Resumia?</h2>
-      <p class="mt-4 text-xl text-gray-600">Our AI-powered platform gives you the edge in your job search</p>
-      <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <div class="p-6 bg-white shadow rounded-lg">
-          <h3 class="text-lg font-semibold">ATS-Optimized</h3>
-          <p class="mt-2 text-sm text-gray-600">Pass through Applicant Tracking Systems with ease.</p>
-        </div>
-        <div class="p-6 bg-white shadow rounded-lg">
-          <h3 class="text-lg font-semibold">AI-Enhanced</h3>
-          <p class="mt-2 text-sm text-gray-600">Highlight achievements and keywords with AI help.</p>
-        </div>
-        <div class="p-6 bg-white shadow rounded-lg">
-          <h3 class="text-lg font-semibold">Custom Cover Letters</h3>
-          <p class="mt-2 text-sm text-gray-600">Tailor-made letters for your dream roles.</p>
-        </div>
-        <div class="p-6 bg-white shadow rounded-lg">
-          <h3 class="text-lg font-semibold">Resume Scoring</h3>
-          <p class="mt-2 text-sm text-gray-600">Instant feedback and suggestions.</p>
-        </div>
-      </div>
-    </div>
+  <!-- Benefits Section -->
+  <section id="benefits" class="py-16 bg-gray-50 text-gray-900">
+    <!-- same as yours -->
   </section>
 
-  <!-- Testimonials -->
-  <section class="py-16 bg-white text-gray-800">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <h2 class="text-3xl font-extrabold">What Our Users Say</h2>
-      <p class="mt-4 text-xl text-gray-600">Thousands of job seekers trust Resumia</p>
-      <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="bg-gray-100 p-6 rounded-lg shadow">
-          <h4 class="font-semibold text-lg">Sarah T.</h4>
-          <p class="text-sm text-gray-500">Software Engineer</p>
-          <p class="mt-4 text-sm text-gray-600">"I got 3 interview calls in one week after using Resumia."</p>
-        </div>
-        <div class="bg-gray-100 p-6 rounded-lg shadow">
-          <h4 class="font-semibold text-lg">Michael R.</h4>
-          <p class="text-sm text-gray-500">Marketing Manager</p>
-          <p class="mt-4 text-sm text-gray-600">"AI cover letter matched my resume perfectly. Dream job!"</p>
-        </div>
-        <div class="bg-gray-100 p-6 rounded-lg shadow">
-          <h4 class="font-semibold text-lg">Jessica L.</h4>
-          <p class="text-sm text-gray-500">Recent Graduate</p>
-          <p class="mt-4 text-sm text-gray-600">"Helped me highlight my strengths professionally."</p>
-        </div>
-      </div>
-    </div>
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="py-16 bg-white text-gray-800">
+    <!-- same as yours -->
   </section>
 
   <!-- Waitlist CTA -->
   <section id="waitlist" class="py-16 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center">
-    <div class="max-w-4xl mx-auto px-4">
-      <h2 class="text-3xl font-bold">Join Our Waitlist</h2>
-      <p class="mt-4 text-lg">Be the first to access premium features and updates</p>
-      <form class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
-        <input type="text" placeholder="Full Name" class="input" required>
-        <input type="email" placeholder="Email Address" class="input" required>
-        <button type="submit" class="btn btn-primary col-span-1 sm:col-span-2">Join Now</button>
-      </form>
-    </div>
+    <!-- same as yours -->
   </section>
-
 </Layout>
