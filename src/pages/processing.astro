@@ -19,39 +19,35 @@ import Layout from '../layouts/Layout.astro';
 
   <!-- Auto-Redirect Script -->
   <script>
-    // Simulate loading and fetch data from localStorage to send to your workflow
     setTimeout(() => {
       const data = JSON.parse(localStorage.getItem("resumeFormData"));
-      if (!data) return alert("No form data found. Please go back and try again.");
+      if (!data) {
+        alert("No form data found. Please go back and fill the form again.");
+        return;
+      }
 
-      const query = new URLSearchParams({
-        firstName: data.firstName || "",
-        lastName: data.lastName || "",
-        email: data.email || "",
-        phone: data.phone || "",
-        education: data.education || "",
-        experience: data.experience || "",
-        skills: data.skills || "",
-        objective: data.objective || ""
-      });
-
-      // Send data to n8n webhook
-      fetch("https://n8n.YOUR_DOMAIN_OR_HOSTNAME/webhook/your_workflow_path", {
+      fetch("https://n8n.YOUR_DOMAIN/webhook/your_workflow_path", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(Object.fromEntries(query)),
+        body: JSON.stringify(data)
       })
-        .then(res => res.json())
-        .then(response => {
-          const { resume, coverLetter, score, strengths, improvements } = response;
-          // Store results in localStorage
-          localStorage.setItem("aiResumeResult", JSON.stringify({ resume, coverLetter, score, strengths, improvements }));
-          window.location.href = "/score";
-        })
-        .catch(error => {
-          console.error("Failed to fetch resume:", error);
-          alert("There was an error generating your resume. Please try again.");
-        });
+      .then(response => response.json())
+      .then(result => {
+        // Save AI results to localStorage
+        localStorage.setItem("aiResumeResult", JSON.stringify({
+          resume: result.resume || "",
+          coverLetter: result.coverLetter || "",
+          score: result.score || 0,
+          strengths: result.strengths || "",
+          improvements: result.improvements || ""
+        }));
+        // Redirect to score page
+        window.location.href = "/score";
+      })
+      .catch(error => {
+        console.error("Error generating resume:", error);
+        alert("Something went wrong. Please try again.");
+      });
     }, 3000);
   </script>
 </Layout>
