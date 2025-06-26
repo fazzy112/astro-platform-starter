@@ -38,7 +38,7 @@
   }
 }
 
-/* Custom Components and Utilities */
+/* ✅ Combined Custom Components and Utilities */
 @layer components {
   .markdown {
     > * {
@@ -59,18 +59,15 @@
   }
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2 bg-primary text-primary-content cursor-pointer text-center font-semibold no-underline transition-colors;
-    padding: var(--btn-py, 0.875rem) var(--btn-px, 1.25rem);
-    font-size: var(--btn-font-size, 0.875rem);
-    border-radius: var(--btn-border-radius, 0.25rem);
+    @apply inline-flex items-center justify-center font-semibold rounded px-4 py-2 transition;
+  }
 
-    &:hover {
-      @apply bg-primary/85;
-    }
+  .btn-primary {
+    @apply bg-indigo-600 text-white hover:bg-indigo-700;
+  }
 
-    &:disabled {
-      @apply text-gray-400 bg-gray-700;
-    }
+  .btn-secondary {
+    @apply bg-white text-indigo-700 border border-indigo-600 hover:bg-gray-100;
   }
 
   .btn-lg {
@@ -79,16 +76,7 @@
     --btn-py: 1.125rem;
   }
 
-  /* Bonus Tailwind Styles */
   .input {
     @apply w-full border border-gray-300 rounded p-2 text-sm;
-  }
-
-  .btn-primary {
-    @apply bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition;
-  }
-
-  .btn-secondary {
-    @apply bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300 transition;
   }
 }
