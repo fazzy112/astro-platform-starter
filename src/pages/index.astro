@@ -53,4 +53,16 @@ import ResumeFormModal from '../components/ResumeFormModal.astro';
   <section id="waitlist" class="py-16 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center">
     <!-- same as yours -->
   </section>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const openModalBtn = document.querySelector(".btn-primary"); // Button to open form modal
+    const modal = document.getElementById("resume-form-modal");
+
+    if (openModalBtn && modal) {
+      openModalBtn.addEventListener("click", () => {
+        modal.classList.remove("hidden");
+      });
+    }
+  });
+</script>
 </Layout>
