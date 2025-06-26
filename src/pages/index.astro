@@ -20,7 +20,7 @@ import ResumeFormModal from '../components/ResumeFormModal.astro';
           Get a professionally crafted, ATS-optimized resume in minutes. Our AI analyzes your experience and tailors it to your dream job.
         </p>
         <div class="mt-8 flex flex-col sm:flex-row gap-4">
-          <!-- ✅ Final working button -->
+          <!-- Final working button -->
           <button id="open-resume-form" class="bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 transition">
             Build Resume from Form
           </button>
@@ -59,4 +59,18 @@ import ResumeFormModal from '../components/ResumeFormModal.astro';
   <section id="waitlist" class="py-16 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center">
     <!-- same as yours -->
   </section>
+
+  <!-- JavaScript for modal toggle -->
+  <script is:inline>
+    document.addEventListener("DOMContentLoaded", () => {
+      const openBtn = document.getElementById("open-resume-form");
+      const modal = document.getElementById("resume-form-modal");
+
+      if (openBtn && modal) {
+        openBtn.addEventListener("click", () => {
+          modal.classList.remove("hidden");
+        });
+      }
+    });
+  </script>
 </Layout>
