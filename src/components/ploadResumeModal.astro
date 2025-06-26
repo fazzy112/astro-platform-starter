@@ -1,0 +1,25 @@
+---
+// no props needed
+---
+
+<div id="upload-resume-modal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center">
+  <div class="bg-white rounded-lg max-w-xl w-full p-6 shadow-lg relative">
+    <button id="close-upload-modal" class="absolute top-3 right-3 text-gray-500 hover:text-red-500 text-xl">&times;</button>
+    <h2 class="text-2xl font-bold mb-4 text-gray-900">Upload Your Resume</h2>
+    <form id="upload-form" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Resume File (PDF/DOC/DOCX)</label>
+        <input type="file" name="resumeFile" accept=".pdf,.doc,.docx" class="input" required />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Job Description</label>
+        <textarea name="jobDescription" class="input" rows="4" placeholder="Paste job description here..." required></textarea>
+      </div>
+      <div class="flex items-center">
+        <input type="checkbox" id="upload-cover-letter" name="upload-cover-letter" class="mr-2" />
+        <label for="upload-cover-letter" class="text-sm text-gray-700">Also generate a cover letter</label>
+      </div>
+      <button type="submit" class="btn btn-primary w-full">Enhance Resume</button>
+    </form>
+  </div>
+</div>
