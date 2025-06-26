@@ -42,7 +42,7 @@
   }
 }
 
-/* ✅ Combined Custom Components and Utilities */
+/* Components and Utilities */
 @layer components {
   .markdown {
     > * {
