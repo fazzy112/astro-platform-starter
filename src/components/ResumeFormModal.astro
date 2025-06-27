@@ -1,50 +1,76 @@
-<!-- end of modal content -->
-</form>
-</div> <!-- modal box end -->
+---
+// ResumeFormModal.astro
+---
+<div id="resume-form-modal" class="fixed inset-0 z-50 hidden bg-black/50 backdrop-blur-sm flex items-center justify-center">
+  <div class="bg-white w-full max-w-2xl p-6 rounded-lg shadow-xl">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-xl font-semibold text-gray-800">Build Your Resume</h3>
+      <button onclick="document.getElementById('resume-form-modal').classList.add('hidden')">❌</button>
+    </div>
+    
+    <!-- ✅ Form starts -->
+    <form id="resume-form" class="space-y-4">
+      <input type="text" placeholder="Full Name" name="name" class="input" required />
+      <input type="email" placeholder="Email Address" name="email" class="input" required />
+      <input type="text" placeholder="Target Job Title" name="job" class="input" required />
+      <textarea placeholder="Education" name="education" class="input" rows="3"></textarea>
+      <textarea placeholder="Experience" name="experience" class="input" rows="3"></textarea>
+      <textarea placeholder="Skills" name="skills" class="input" rows="2"></textarea>
+      <label class="inline-flex items-center">
+        <input type="checkbox" name="cover-letter" class="mr-2" />
+        Also generate cover letter
+      </label>
+      <div class="text-right">
+        <button type="submit" class="btn btn-primary">Generate</button>
+      </div>
+    </form>
+    <!-- ✅ Form ends -->
+  </div>
 
-<!-- ✅ Paste script AFTER modal box -->
-<script is:inline>
-  document.addEventListener("DOMContentLoaded", () => {
-    const openBtn = document.getElementById("open-resume-form");
-    const modal = document.getElementById("resume-form-modal");
-    const form = document.getElementById("resume-form");
+  <!-- ✅ Script to control modal + submit -->
+  <script is:inline>
+    document.addEventListener("DOMContentLoaded", () => {
+      const openBtn = document.getElementById("open-resume-form");
+      const modal = document.getElementById("resume-form-modal");
+      const form = document.getElementById("resume-form");
 
-    if (openBtn && modal) {
-      openBtn.addEventListener("click", () => {
-        modal.classList.remove("hidden");
-      });
-    }
+      if (openBtn && modal) {
+        openBtn.addEventListener("click", () => {
+          modal.classList.remove("hidden");
+        });
+      }
 
-    if (form) {
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
+      if (form) {
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
 
-        const formData = new FormData(form);
-        const resumeData = {
-          name: formData.get("name"),
-          email: formData.get("email"),
-          job: formData.get("job"),
-          education: formData.get("education"),
-          experience: formData.get("experience"),
-          skills: formData.get("skills"),
-          coverLetter: formData.get("cover-letter") ? "yes" : "no",
-        };
+          const formData = new FormData(form);
+          const resumeData = {
+            name: formData.get("name"),
+            email: formData.get("email"),
+            job: formData.get("job"),
+            education: formData.get("education"),
+            experience: formData.get("experience"),
+            skills: formData.get("skills"),
+            coverLetter: formData.get("cover-letter") ? "yes" : "no",
+          };
 
-        const combinedText = `
-          Name: ${resumeData.name}
-          Email: ${resumeData.email}
-          Job Title: ${resumeData.job}
-          Education: ${resumeData.education}
-          Experience: ${resumeData.experience}
-          Skills: ${resumeData.skills}
-        `;
+          const combinedText = `
+            Name: ${resumeData.name}
+            Email: ${resumeData.email}
+            Job Title: ${resumeData.job}
+            Education: ${resumeData.education}
+            Experience: ${resumeData.experience}
+            Skills: ${resumeData.skills}
+          `;
 
-        localStorage.setItem("old_resume", combinedText.trim());
-        localStorage.setItem("job", resumeData.job);
-        localStorage.setItem("generate_cover_letter", resumeData.coverLetter);
+          localStorage.setItem("old_resume", combinedText.trim());
+          localStorage.setItem("job", resumeData.job);
+          localStorage.setItem("generate_cover_letter", resumeData.coverLetter);
 
-        window.location.href = "/processing";
-      });
-    }
-  });
-</script>
+          window.location.href = "/processing";
+        });
+      }
+    });
+  </script>
+</div>
