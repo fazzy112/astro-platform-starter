@@ -1,6 +1,8 @@
 ---
-// src/pages/index.astro
+import ResumeFormModal from "../components/ResumeFormModal.astro";
+// import UploadResumeModal from "../components/UploadResumeModal.astro"; (for next step)
 ---
+
 <html>
   <head>
     <title>ResumeAI - Home</title>
@@ -11,44 +13,28 @@
     <main class="min-h-screen flex flex-col items-center justify-center p-8">
       <h1 class="text-4xl font-bold mb-4">🚀 Welcome to ResumeAI</h1>
       <p class="mb-6">Start building your AI-powered resume</p>
-      <button id="open-form" class="bg-indigo-600 text-white px-6 py-3 rounded-lg shadow hover:bg-indigo-700">
+
+      <!-- Build Resume Button (opens modal) -->
+      <button
+        id="open-resume-form"
+        class="bg-indigo-600 text-white px-6 py-3 rounded-lg shadow hover:bg-indigo-700"
+      >
         Build Resume
       </button>
+
+      <!-- Future: Upload Resume Button -->
+      <!--
+      <button
+        id="open-upload-modal"
+        class="mt-4 bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300"
+      >
+        Upload Existing Resume
+      </button>
+      -->
     </main>
 
-    <!-- ✅ Resume form modal -->
-    <div id="form-modal" class="fixed inset-0 z-50 hidden bg-black/50 backdrop-blur-sm flex items-center justify-center">
-      <div class="bg-white w-full max-w-lg p-6 rounded-lg relative">
-        <button id="close-form" class="absolute top-3 right-3 text-gray-500 text-xl hover:text-red-500">&times;</button>
-        <h2 class="text-xl font-bold mb-4">Resume Form</h2>
-        <form id="resume-form" class="space-y-4">
-          <input name="name" placeholder="Full Name" class="w-full border border-gray-300 rounded p-2" required />
-          <input name="email" placeholder="Email" class="w-full border border-gray-300 rounded p-2" required />
-          <input name="job" placeholder="Target Job" class="w-full border border-gray-300 rounded p-2" required />
-          <textarea name="experience" placeholder="Experience" class="w-full border border-gray-300 rounded p-2"></textarea>
-          <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700">
-            Generate
-          </button>
-        </form>
-      </div>
-    </div>
-
-    <!-- ✅ Script for modal & form -->
-    <script>
-      const openBtn = document.getElementById("open-form");
-      const closeBtn = document.getElementById("close-form");
-      const modal = document.getElementById("form-modal");
-
-      openBtn.onclick = () => modal.classList.remove("hidden");
-      closeBtn.onclick = () => modal.classList.add("hidden");
-
-      document.getElementById("resume-form").onsubmit = (e) => {
-        e.preventDefault();
-        const data = new FormData(e.target);
-        localStorage.setItem("old_resume", data.get("experience") || "");
-        localStorage.setItem("job", data.get("job") || "");
-        window.location.href = "/processing";
-      };
-    </script>
+    <!-- Modals -->
+    <ResumeFormModal client:load />
+    <!-- <UploadResumeModal client:load /> -->
   </body>
 </html>
